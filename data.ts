@@ -1,4 +1,5 @@
 // data.ts
+
 export const data = {
     pollutions: [
         {

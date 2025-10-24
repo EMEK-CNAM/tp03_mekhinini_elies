@@ -13,12 +13,13 @@ export class PollutionService {
 
     constructor(private http: HttpClient) { }
 
+
     getAll(): Observable<Pollution[]> {
         return of(this.dataPollution);
     }
 
     getById(id: string): Observable<Pollution> {
-        console.log('Fetching pollution with id:', id);
+        //console.log('Fetching pollution with id:', id);
         const pollution = this.dataPollution.find(p => p.id === id);
         if (!pollution) {
             return throwError(() => new Error('Pollution not found'));
