@@ -10,7 +10,7 @@
     "serve:ssr:tp3_mekhinini_elies": "node dist/tp3_mekhinini_elies/server/server.mjs",
     "start:api": "json-server --watch db.json --port 3000",
     "start:all": "npx concurrently \"npm run start:api\" \"ng serve\"",
-    "serve:ssr:TP02_mekhinini_elies": "node dist/TP03_mekhinini_elies/server/server.mjs"
+    "serve:ssr:TP03_mekhinini_elies": "node dist/TP03_mekhinini_elies/server/server.mjs"
   },
   "prettier": {
     "printWidth": 100,
