@@ -1,0 +1,34 @@
+<div class="form">
+    <h2>Nouvelle déclaration</h2>
+    <form [formGroup]="pollutionForm" (ngSubmit)="submit()">
+        <label>Titre</label>
+        <input formControlName="titre">
+        <div *ngIf="pollutionForm.get('titre')?.touched && pollutionForm.get('titre')?.invalid">Requis</div>
+
+        <label>Type</label>
+        <select formControlName="type">
+            <option value="">--</option>
+            <option *ngFor="let t of types" [value]="t">{{t}}</option>
+        </select>
+
+        <label>Description</label>
+        <textarea formControlName="description"></textarea>
+
+        <label>Date</label>
+        <input type="date" formControlName="dateObservation">
+
+        <label>Lieu</label>
+        <input formControlName="lieu">
+
+        <label>Latitude</label>
+        <input type="number" formControlName="latitude">
+
+        <label>Longitude</label>
+        <input type="number" formControlName="longitude">
+
+        <label>Photo (URL)</label>
+        <input formControlName="photo">
+
+        <button type="submit">Créer</button>
+    </form>
+</div>

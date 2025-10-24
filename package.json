@@ -7,7 +7,9 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:tp3_mekhinini_elies": "node dist/tp3_mekhinini_elies/server/server.mjs"
+    "serve:ssr:tp3_mekhinini_elies": "node dist/tp3_mekhinini_elies/server/server.mjs",
+    "start:api": "json-server --watch db.json --port 3000",
+    "start:all": "npx concurrently \"npm run start:api\" \"ng serve\""
   },
   "prettier": {
     "printWidth": 100,
@@ -44,6 +46,7 @@
     "@types/jasmine": "~5.1.0",
     "@types/node": "^20.17.19",
     "jasmine-core": "~5.9.0",
+    "json-server": "^1.0.0-beta.3",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",

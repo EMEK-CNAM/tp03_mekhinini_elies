@@ -4,9 +4,9 @@ import { RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet],
-  templateUrl: './app.html',
+  templateUrl: './app.component.html',
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('tp3_mekhinini_elies');
+  protected readonly title = signal('tp03_mekhinini_elies');
 }
