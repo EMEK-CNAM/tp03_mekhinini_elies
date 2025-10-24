@@ -1,32 +1,57 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+
+import { Observable, of, throwError } from 'rxjs';
+import { map, delay, switchMap } from 'rxjs/operators';
 import { Pollution } from '../models/pollution';
+import { data } from '../../../data';
 import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class PollutionService {
-    private base = `${environment.apiUrl}/pollutions`;
+    private dataPollution: Pollution[] = (data as any).pollutions as Pollution[] || [];
 
     constructor(private http: HttpClient) { }
 
     getAll(): Observable<Pollution[]> {
-        return this.http.get<Pollution[]>(this.base);
+        return of(this.dataPollution);
     }
 
     getById(id: string): Observable<Pollution> {
-        return this.http.get<Pollution>(`${this.base}/${id}`);
+        console.log('Fetching pollution with id:', id);
+        const pollution = this.dataPollution.find(p => p.id === id);
+        if (!pollution) {
+            return throwError(() => new Error('Pollution not found'));
+        }
+
+        return of(pollution);
     }
 
     create(p: Pollution): Observable<Pollution> {
-        return this.http.post<Pollution>(this.base, p);
+        const newPollution: Pollution = { ...p, id: String((Math.random() * 100).toFixed(0)) };
+        this.dataPollution.push(newPollution);
+        return of(newPollution);
+
     }
 
     update(id: string, p: Pollution): Observable<Pollution> {
-        return this.http.put<Pollution>(`${this.base}/${id}`, p);
+        const index = this.dataPollution.findIndex(p => p.id === id);
+        if (index === -1) {
+            return throwError(() => new Error('Pollution not found'));
+        }
+
+        const updatedPollution = { ...this.dataPollution[index], ...p };
+        this.dataPollution[index] = updatedPollution;
+        return of(updatedPollution);
     }
 
     delete(id: string): Observable<void> {
-        return this.http.delete<void>(`${this.base}/${id}`);
+        const index = this.dataPollution.findIndex(p => p.id === id);
+        if (index === -1) {
+            return throwError(() => new Error('Pollution not found'));
+        }
+
+        this.dataPollution.splice(index, 1);
+        return of(undefined);
     }
 }

@@ -1,15 +1,15 @@
-// server.js
+// server.cjs
 const jsonServer = require('json-server');
-const path = require('path');
+const { data } = require('./data.js'); // on importe les données compilées
 
 const server = jsonServer.create();
-const router = jsonServer.router(path.join(__dirname, 'db.json'));
+const router = jsonServer.router(data); // pas de fichier, data en mémoire
 const middlewares = jsonServer.defaults();
 
 server.use(middlewares);
 server.use(jsonServer.bodyParser);
 
-// Middleware pour forcer un id numérique auto-incrémenté
+// Middleware : forcer un id numérique auto-incrémenté
 server.post('/pollutions', (req, res, next) => {
     const pollutions = router.db.get('pollutions').value();
     const last = pollutions.length ? Math.max(...pollutions.map(p => Number(p.id) || 0)) : 0;
@@ -18,6 +18,9 @@ server.post('/pollutions', (req, res, next) => {
 });
 
 server.use(router);
-server.listen(3000, () => {
-    console.log('✅ JSON Server running on http://localhost:3000');
+
+// Render impose un port fourni par process.env.PORT
+const port = process.env.PORT || 3000;
+server.listen(port, () => {
+    console.log(`✅ JSON Server running on port ${port}`);
 });
