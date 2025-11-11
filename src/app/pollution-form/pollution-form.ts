@@ -14,18 +14,18 @@ import { Router } from '@angular/router';
 export class PollutionForm {
     pollutionForm: any;
 
-    types = ['Plastique', 'Chimique', 'Dépôt sauvage', 'Eau', 'Air', 'Autre'];
+    type_pollutions = ['Plastique', 'Chimique', 'Dépôt sauvage', 'Eau', 'Air', 'Autre'];
 
     constructor(private fb: FormBuilder, private svc: PollutionService, private router: Router) {
         this.pollutionForm = this.fb.group({
             titre: ['', Validators.required],
-            type: ['', Validators.required],
+            type_pollution: ['', Validators.required],
             description: ['', Validators.required],
-            dateObservation: ['', Validators.required],
+            date_observation: ['', Validators.required],
             lieu: ['', Validators.required],
             latitude: [null, [Validators.required]],
             longitude: [null, [Validators.required]],
-            photo: ['']
+            photo_url: ['']
         });
     }
 

@@ -46,7 +46,9 @@ export class PollutionDetail implements OnInit {
     }
 
     edit() {
-        console.log('Fonction d’édition non encore implémentée.');
+        if (this.pollution && this.pollution.id) {
+            this.router.navigate(['/edit', this.pollution.id]);
+        }
     }
 
     back() {

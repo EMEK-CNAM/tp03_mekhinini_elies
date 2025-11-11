@@ -1,11 +1,11 @@
 export interface Pollution {
     id?: string;
     titre: string;
-    type: string;
-    description: string;
-    dateObservation: string; // ISO yyyy-mm-dd
     lieu: string;
+    date_observation: string; // ISO yyyy-mm-dd
+    type_pollution: string;
+    description: string;
     latitude: number;
     longitude: number;
-    photo?: string;
+    photo_url?: string;
 }

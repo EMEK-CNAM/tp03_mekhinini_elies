@@ -10,49 +10,30 @@ import { environment } from '../../environments/environment';
 @Injectable({ providedIn: 'root' })
 export class PollutionService {
     private dataPollution: Pollution[] = (data as any).pollutions as Pollution[] || [];
+    private apiUrl: string = `https://templateweb-latest-nzzn.onrender.com`;
 
     constructor(private http: HttpClient) { }
 
 
+
     getAll(): Observable<Pollution[]> {
-        return of(this.dataPollution);
+        return this.http.get<Pollution[]>(this.apiUrl + '/api/pollution');
     }
 
     getById(id: string): Observable<Pollution> {
         //console.log('Fetching pollution with id:', id);
-        const pollution = this.dataPollution.find(p => p.id === id);
-        if (!pollution) {
-            return throwError(() => new Error('Pollution not found'));
-        }
-
-        return of(pollution);
+        return this.http.get<Pollution>(`${this.apiUrl}/api/pollution/${id}`);
     }
 
     create(p: Pollution): Observable<Pollution> {
-        const newPollution: Pollution = { ...p, id: String((Math.random() * 100).toFixed(0)) };
-        this.dataPollution.push(newPollution);
-        return of(newPollution);
-
+        return this.http.post<Pollution>(this.apiUrl + '/api/pollution', p);
     }
 
     update(id: string, p: Pollution): Observable<Pollution> {
-        const index = this.dataPollution.findIndex(p => p.id === id);
-        if (index === -1) {
-            return throwError(() => new Error('Pollution not found'));
-        }
-
-        const updatedPollution = { ...this.dataPollution[index], ...p };
-        this.dataPollution[index] = updatedPollution;
-        return of(updatedPollution);
+        return this.http.put<Pollution>(`${this.apiUrl}/api/pollution/${id}`, p);
     }
 
     delete(id: string): Observable<void> {
-        const index = this.dataPollution.findIndex(p => p.id === id);
-        if (index === -1) {
-            return throwError(() => new Error('Pollution not found'));
-        }
-
-        this.dataPollution.splice(index, 1);
-        return of(undefined);
+        return this.http.delete<void>(`${this.apiUrl}/api/pollution/${id}`);
     }
 }

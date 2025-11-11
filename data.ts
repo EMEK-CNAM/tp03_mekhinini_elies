@@ -5,24 +5,24 @@ export const data = {
         {
             id: "1",
             titre: "Plastique sur la plage",
-            type: "Plastique",
+            type_pollution: "Plastique",
             description: "Bouteilles et sacs",
-            dateObservation: "2025-10-01",
+            date_observation: "2025-10-01",
             lieu: "Plage Nord",
             latitude: 48.8566,
             longitude: 2.3522,
-            photo: ""
+            photo_url: ""
         },
         {
             id: "2",
             titre: "Angular",
-            type: "Dépôt sauvage",
+            type_pollution: "Dépôt sauvage",
             description: "Tellement c'est nul qu'il a été abandonné dans la nature",
-            dateObservation: "2012-12-13",
+            date_observation: "2012-12-13",
             lieu: "Dans un dépôt",
             latitude: 67,
             longitude: 69,
-            photo: "https://www.slate.fr/uploads/store/story_238852/medium_landscape_238852.jpg"
+            photo_url: "https://www.slate.fr/uploads/store/story_238852/medium_landscape_238852.jpg"
         }
     ]
 };

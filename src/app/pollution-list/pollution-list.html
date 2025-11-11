@@ -7,7 +7,7 @@
 
     <ul>
         <li *ngFor="let p of pollutions">
-            <strong>{{ p.titre }}</strong> — {{ p.type }} — {{ p.dateObservation }}
+            <strong>{{ p.titre }}</strong> — {{ p.type_pollution }} — {{ p.date_observation }}
             <button (click)="goToDetail(p.id!)">Détails</button>
             <button (click)="delete(p.id)">Supprimer</button>
         </li>

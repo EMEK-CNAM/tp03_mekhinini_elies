@@ -6,16 +6,16 @@
         <div *ngIf="pollutionForm.get('titre')?.touched && pollutionForm.get('titre')?.invalid">Requis</div>
 
         <label>Type</label>
-        <select formControlName="type">
+        <select formControlName="type_pollution">
             <option value="">--</option>
-            <option *ngFor="let t of types" [value]="t">{{t}}</option>
+            <option *ngFor="let t of type_pollutions" [value]="t">{{t}}</option>
         </select>
 
         <label>Description</label>
         <textarea formControlName="description"></textarea>
 
         <label>Date</label>
-        <input type="date" formControlName="dateObservation">
+        <input type="date" formControlName="date_observation">
 
         <label>Lieu</label>
         <input formControlName="lieu">
@@ -26,8 +26,8 @@
         <label>Longitude</label>
         <input type="number" formControlName="longitude">
 
-        <label>Photo (URL)</label>
-        <input formControlName="photo">
+        <label>photo_url (URL)</label>
+        <input formControlName="photo_url">
 
         <button type="submit">Créer</button>
     </form>
