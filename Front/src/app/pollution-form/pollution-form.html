@@ -1,34 +1,52 @@
-<div class="form">
-    <h2>Nouvelle déclaration</h2>
-    <form [formGroup]="pollutionForm" (ngSubmit)="submit()">
-        <label>Titre</label>
-        <input formControlName="titre">
-        <div *ngIf="pollutionForm.get('titre')?.touched && pollutionForm.get('titre')?.invalid">Requis</div>
-
-        <label>Type</label>
-        <select formControlName="type_pollution">
-            <option value="">--</option>
-            <option *ngFor="let t of type_pollutions" [value]="t">{{t}}</option>
-        </select>
-
-        <label>Description</label>
-        <textarea formControlName="description"></textarea>
-
-        <label>Date</label>
-        <input type="date" formControlName="date_observation">
-
-        <label>Lieu</label>
-        <input formControlName="lieu">
-
-        <label>Latitude</label>
-        <input type="number" formControlName="latitude">
-
-        <label>Longitude</label>
-        <input type="number" formControlName="longitude">
-
-        <label>photo_url (URL)</label>
-        <input formControlName="photo_url">
-
-        <button type="submit">Créer</button>
+<div class="form-container">
+    <h2>{{ isEditMode ? 'Modifier la pollution' : 'Nouvelle déclaration' }}</h2>
+    <form [formGroup]="pollutionForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="titre">Titre *</label>
+            <input id="titre" formControlName="titre" type="text" placeholder="Titre de la pollution" />
+        </div>
+        <div class="form-group">
+            <label for="type_pollution">Type de pollution *</label>
+            <select id="type_pollution" formControlName="type_pollution">
+                <option value="">-- Sélectionner --</option>
+                <option value="Air">Air</option>
+                <option value="Eau">Eau</option>
+                <option value="Sol">Sol</option>
+                <option value="Sonore">Sonore</option>
+                <option value="Visuelle">Visuelle</option>
+                <option value="Autre">Autre</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="lieu">Lieu *</label>
+            <input id="lieu" formControlName="lieu" type="text" placeholder="Adresse ou localisation" />
+        </div>
+        <div class="form-group">
+            <label for="date_observation">Date d'observation *</label>
+            <input id="date_observation" formControlName="date_observation" type="date" />
+        </div>
+        <div class="form-group">
+            <label for="latitude">Latitude *</label>
+            <input id="latitude" formControlName="latitude" type="number" step="0.000001" placeholder="48.8566" />
+        </div>
+        <div class="form-group">
+            <label for="longitude">Longitude *</label>
+            <input id="longitude" formControlName="longitude" type="number" step="0.000001" placeholder="2.3522" />
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" formControlName="description" rows="4"
+                placeholder="Décrivez la pollution observée"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="photo_url">URL Photo</label>
+            <input id="photo_url" formControlName="photo_url" type="url" placeholder="https://..." />
+        </div>
+        <div class="form-actions">
+            <button type="submit" [disabled]="pollutionForm.invalid" class="btn-submit">
+                {{ isEditMode ? 'Mettre à jour' : 'Créer' }}
+            </button>
+            <button type="button" (click)="onCancel()" class="btn-cancel">Annuler</button>
+        </div>
     </form>
 </div>

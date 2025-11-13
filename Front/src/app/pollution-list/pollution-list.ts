@@ -37,10 +37,10 @@ export class PollutionList implements OnInit {
     }
 
     goToDetail(id: string) {
-        this.router.navigate(['/pollution', id]);
+        this.router.navigate(['/pollutions', id]);
     }
 
     newForm() {
-        this.router.navigate(['/new']);
+        this.router.navigate(['/pollutions/new']);
     }
 }

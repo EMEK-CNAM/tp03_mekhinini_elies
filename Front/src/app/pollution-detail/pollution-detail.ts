@@ -47,11 +47,11 @@ export class PollutionDetail implements OnInit {
 
     edit() {
         if (this.pollution && this.pollution.id) {
-            this.router.navigate(['/edit', this.pollution.id]);
+            this.router.navigate(['/pollutions', this.pollution.id, 'edit']);
         }
     }
 
     back() {
-        this.router.navigate(['/']);
+        this.router.navigate(['/pollutions']);
     }
 }

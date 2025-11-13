@@ -1,4 +1,4 @@
-.pollution-list-container {
+.user-list-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
@@ -19,102 +19,106 @@
     font-size: 28px;
 }
 
-.btn-primary {
-    padding: 12px 24px;
-    background: #4CAF50;
+.btn-back {
+    padding: 10px 20px;
+    background: #607D8B;
     color: white;
     border: none;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(76, 175, 80, 0.3);
 }
 
-.btn-primary:hover {
-    background: #45a049;
+.btn-back:hover {
+    background: #546E7A;
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(76, 175, 80, 0.4);
 }
 
-.pollution-grid {
+.loading {
+    text-align: center;
+    padding: 40px;
+    font-size: 18px;
+    color: #666;
+}
+
+.error-message {
+    background: #ffebee;
+    color: #c62828;
+    padding: 15px;
+    border-radius: 5px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.user-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 25px;
 }
 
-.pollution-card {
+.user-card {
     background: white;
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
-    border-left: 4px solid #4CAF50;
+    border-left: 4px solid #2196F3;
 }
 
-.pollution-card:hover {
+.user-card:hover {
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
     transform: translateY(-3px);
 }
 
-.pollution-card h3 {
-    margin: 0 0 15px 0;
+.user-header {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.user-header h3 {
+    margin: 0;
     color: #2c3e50;
     font-size: 20px;
     font-weight: 600;
 }
 
-.pollution-card p {
+.user-info {
+    margin-bottom: 15px;
+}
+
+.user-info p {
     margin: 8px 0;
     color: #555;
     font-size: 14px;
     line-height: 1.5;
 }
 
-.pollution-card p strong {
+.user-info p strong {
     color: #333;
     font-weight: 600;
+    display: inline-block;
+    min-width: 120px;
 }
 
-.description {
-    margin: 15px 0;
-    padding: 10px;
-    background: #f8f9fa;
-    border-radius: 4px;
-    color: #666;
-    font-size: 13px;
-    line-height: 1.6;
-    max-height: 60px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.pollution-card button {
+.user-actions {
+    display: flex;
+    gap: 10px;
     margin-top: 15px;
-    margin-right: 10px;
+}
+
+.btn-delete {
     padding: 8px 16px;
+    background: #f44336;
+    color: white;
     border: none;
     border-radius: 4px;
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
-}
-
-.btn-detail {
-    background: #2196F3;
-    color: white;
-}
-
-.btn-detail:hover {
-    background: #0b7dda;
-    transform: translateY(-1px);
-}
-
-.btn-delete {
-    background: #f44336;
-    color: white;
 }
 
 .btn-delete:hover {
@@ -133,7 +137,7 @@
 }
 
 @media (max-width: 768px) {
-    .pollution-grid {
+    .user-grid {
         grid-template-columns: 1fr;
     }
 
@@ -143,7 +147,7 @@
         align-items: flex-start;
     }
 
-    .btn-primary {
+    .btn-back {
         width: 100%;
     }
 }
