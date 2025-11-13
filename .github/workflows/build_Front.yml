@@ -26,6 +26,7 @@ jobs:
               with:
                 node-version: '18'
                 cache: 'npm'
+                cache-dependency-path: Front/package-lock.json
 
             - name: Install dependencies (Front)
               working-directory: Front
@@ -42,9 +43,12 @@ jobs:
                 # git clone "https://${{ secrets.TARGET_REPO_TOKEN }}@github.com/${{ env.TARGET_REPO }}.git" target_repo
                 # cd target_repo
                 # git checkout "${TARGET_BRANCH}" || git checkout -b "${TARGET_BRANCH}"
+
+                # test step
               run: |
                 mkdir target_repo
                 cd target_repo
+                touch .gitkeep
             
             - name: Copy Browser build to target repo and push
               run: |
