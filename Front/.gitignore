@@ -42,3 +42,4 @@ __screenshots__/
 Thumbs.db
 
 .angular/
+/dist/
