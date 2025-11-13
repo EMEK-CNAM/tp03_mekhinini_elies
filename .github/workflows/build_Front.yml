@@ -1,67 +1,63 @@
-name: Build Front and deploy Browser
-
-on:
-    push:
-        paths:
-            - 'Front/**'
-            - '.github/workflows/build_Front.yml'
-    workflow_dispatch:
-
-jobs:
-    build-and-deploy:
-        runs-on: ubuntu-latest
-        env:
-            # Replace OWNER/TARGET-REPO with the target repository (example: my-org/static-site)
-            TARGET_REPO: OWNER/TARGET-REPO
-            # Replace with the branch you want to push to (e.g. gh-pages or main)
-            TARGET_BRANCH: main
-        steps:
-            - name: Checkout source
-              uses: actions/checkout@v4
-              with:
-                fetch-depth: 0
-
-            - name: Setup Node.js
-              uses: actions/setup-node@v4
-              with:
-                node-version: '20.19'
-                cache: 'npm'
-                cache-dependency-path: Front/package-lock.json
-
-            - name: Install dependencies (Front)
-              working-directory: Front
-              run: npm ci
-
-            - name: Build Angular (Front)
-              working-directory: Front
-              run: npx ng build --configuration production --output-path=dist/tp3_mekhinini_elies
-
-            - name: Clone target repo
-                # Requires a PAT stored in repository secrets as TARGET_REPO_TOKEN (scope: repo)
-                
-                # echo "Cloning https://github.com/${{ env.TARGET_REPO }} (branch: ${TARGET_BRANCH})"
-                # git clone "https://${{ secrets.TARGET_REPO_TOKEN }}@github.com/${{ env.TARGET_REPO }}.git" target_repo
-                # cd target_repo
-                # git checkout "${TARGET_BRANCH}" || git checkout -b "${TARGET_BRANCH}"
-
-                # test step
-              run: |
-                mkdir target_repo
-                cd target_repo
-                touch .gitkeep
-            
-            - name: Copy Browser build to target repo and push
-              run: |
-                # Ensure target_repo exists from previous step
-                rsync -av --delete Front/dist/tp3_mekhinini_elies/Browser/ target_repo/
-                cd target_repo
-                git config user.name "github-actions[bot]"
-                git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-                git add --all
-                git commit -m "Deploy Browser from ${{ github.repository }}@${{ github.sha }}" || echo "No changes to commit"
-                git push "https://${{ secrets.TARGET_REPO_TOKEN }}@github.com/${{ env.TARGET_REPO }}.git" HEAD:${{ env.TARGET_BRANCH }}
-
-# Notes:
-# - Create a repository secret named TARGET_REPO_TOKEN (Personal Access Token with repo scope)
-# - Replace env.TARGET_REPO (OWNER/TARGET-REPO) and env.TARGET_BRANCH with real values
-# - The Angular build output will be placed in Front/dist/tp3_mekhinini_elies and the Browser subfolder contents are pushed to the target repo
+# name: Build Front and deploy Browser
+#
+# on:
+#     push:
+#         paths:
+#             - 'Front/**'
+#             - '.github/workflows/build_Front.yml'
+#     workflow_dispatch:
+#
+# jobs:
+#     build-and-deploy:
+#         runs-on: ubuntu-latest
+#         env:
+#             # Replace OWNER/TARGET-REPO with the target repository (example: my-org/static-site)
+#             TARGET_REPO: OWNER/TARGET-REPO
+#             # Replace with the branch you want to push to (e.g. gh-pages or main)
+#             TARGET_BRANCH: main
+#         steps:
+#             - name: Checkout source
+#               uses: actions/checkout@v4
+#               with:
+#                 fetch-depth: 0
+#
+#             - name: Setup Node.js
+#               uses: actions/setup-node@v4
+#               with:
+#                 node-version: '20.19'
+#                 cache: 'npm'
+#                 cache-dependency-path: Front/package-lock.json
+#
+#             - name: Install dependencies (Front)
+#               working-directory: Front
+#               run: npm ci
+#
+#             - name: Build Angular (Front)
+#               working-directory: Front
+#               run: npx ng build --configuration production --output-path=dist/tp3_mekhinini_elies
+#
+#             - name: Clone target repo
+#                 # Requires a PAT stored in repository secrets as TARGET_REPO_TOKEN (scope: repo)
+#               run: |
+#                 echo "Cloning https://github.com/${{ env.TARGET_REPO }} (branch: ${TARGET_BRANCH})"
+#                 git clone "https://${{ secrets.TARGET_REPO_TOKEN }}@github.com/${{ env.TARGET_REPO }}.git" target_repo
+#                 cd target_repo
+#                 git checkout "${TARGET_BRANCH}" || git checkout -b "${TARGET_BRANCH}"
+#
+#
+#             
+#             - name: Copy Browser build to target repo and push
+#               run: |
+#                 # Ensure target_repo exists from previous step
+#                 rsync -av --delete Front/dist/tp3_mekhinini_elies/Browser/ target_repo/
+#                 cd target_repo
+#                 git config user.name "github-actions[bot]"
+#                 git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+#                 git add --all
+#                 git commit -m "Deploy Browser from ${{ github.repository }}@${{ github.sha }}" || echo "No changes to commit"
+#                 git push "https://${{ secrets.TARGET_REPO_TOKEN }}@github.com/${{ env.TARGET_REPO }}.git" HEAD:${{ env.TARGET_BRANCH }}
+#
+# # Notes:
+# # - Create a repository secret named TARGET_REPO_TOKEN (Personal Access Token with repo scope)
+# # - Replace env.TARGET_REPO (OWNER/TARGET-REPO) and env.TARGET_BRANCH with real values
+# # - The Angular build output will be placed in Front/dist/tp3_mekhinini_elies and the Browser subfolder contents are pushed to the target repo
