@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PollutionService } from '../services/pollution.service';
+import { FavoritesService } from '../services/favorites.service';
 import { Pollution } from '../models/pollution';
 import { RouterModule, Router } from '@angular/router';
 
@@ -16,7 +17,11 @@ export class PollutionList implements OnInit {
     loading = false;
     error: string | null = null;
 
-    constructor(private svc: PollutionService, private router: Router) { }
+    constructor(
+        private svc: PollutionService,
+        private router: Router,
+        public favoritesService: FavoritesService
+    ) { }
 
     ngOnInit() {
         this.load();
@@ -30,17 +35,30 @@ export class PollutionList implements OnInit {
         });
     }
 
-    delete(id?: string) {
+    delete(id?: string | number) {
         if (!id) return;
         if (!confirm('Supprimer ?')) return;
         this.svc.delete(id).subscribe(() => this.load());
     }
 
-    goToDetail(id: string) {
-        this.router.navigate(['/pollutions', id]);
+    goToDetail(id: string | number | undefined) {
+        if (id) {
+            this.router.navigate(['/pollutions', id]);
+        }
     }
 
     newForm() {
         this.router.navigate(['/pollutions/new']);
+    }
+
+    toggleFavorite(id?: string | number, event?: Event) {
+        if (event) {
+            event.stopPropagation();
+        }
+        this.favoritesService.toggleFavorite(id);
+    }
+
+    isFavorite(id?: string | number): boolean {
+        return this.favoritesService.isFavorite(id);
     }
 }

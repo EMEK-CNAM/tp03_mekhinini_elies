@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { FavoritesService } from '../services/favorites.service';
 
 @Component({
     selector: 'app-login-form',
@@ -11,13 +12,22 @@ import { Router } from '@angular/router';
     styleUrls: ['./login-form.css']
 })
 export class LoginFormComponent {
-    constructor(private router: Router) { }
+    email = '';
+    password = '';
+
+    constructor(
+        private router: Router,
+        private favoritesService: FavoritesService
+    ) { }
 
     onSubmit(): void {
-        // Login logic here
+        const username = this.email.split('@')[0];
         localStorage.setItem('app:isLoggedIn', 'true');
-        localStorage.setItem('app:username', 'user');
-        this.router.navigate(['/pollutions']);
+        localStorage.setItem('app:username', username);
+
+        this.favoritesService.setCurrentUser(username);
+
+        window.location.href = '/pollutions';
     }
 
     onRegister(): void {

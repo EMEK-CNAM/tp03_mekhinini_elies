@@ -19,20 +19,23 @@ export class PollutionService {
         return this.http.get<Pollution[]>(this.apiUrl + '/api/pollution');
     }
 
-    getById(id: string): Observable<Pollution> {
-        //console.log('Fetching pollution with id:', id);
+    getById(id: string | number): Observable<Pollution> {
         return this.http.get<Pollution>(`${this.apiUrl}/api/pollution/${id}`);
     }
 
     create(p: Pollution): Observable<Pollution> {
-        return this.http.post<Pollution>(this.apiUrl + '/api/pollution', p);
+        const payload = { ...p };
+        delete payload.id;
+        return this.http.post<Pollution>(this.apiUrl + '/api/pollution', payload);
     }
 
-    update(id: string, p: Pollution): Observable<Pollution> {
-        return this.http.put<Pollution>(`${this.apiUrl}/api/pollution/${id}`, p);
+    update(id: string | number, p: Pollution): Observable<Pollution> {
+        const payload = { ...p };
+        delete payload.id;
+        return this.http.put<Pollution>(`${this.apiUrl}/api/pollution/${id}`, payload);
     }
 
-    delete(id: string): Observable<void> {
+    delete(id: string | number): Observable<void> {
         return this.http.delete<void>(`${this.apiUrl}/api/pollution/${id}`);
     }
 }

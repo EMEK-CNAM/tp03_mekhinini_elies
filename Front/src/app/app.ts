@@ -2,6 +2,7 @@ import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Router, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FavoritesService } from './services/favorites.service';
 
 @Component({
   selector: 'app-root',
@@ -13,10 +14,12 @@ import { CommonModule } from '@angular/common';
 export class App implements OnInit {
   isLoggedIn = false;
   username?: string;
+  favoritesCount = 0;
 
   constructor(
     private router: Router,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private favoritesService: FavoritesService
   ) { }
 
   ngOnInit(): void {
@@ -30,6 +33,10 @@ export class App implements OnInit {
         this.username = user;
       }
     }
+
+    this.favoritesService.favorites$.subscribe(favorites => {
+      this.favoritesCount = favorites.length;
+    });
   }
 
   goHome(): void {
@@ -47,10 +54,15 @@ export class App implements OnInit {
     }
     this.isLoggedIn = false;
     this.username = undefined;
+    this.favoritesService.clearCurrentUser();
     this.router.navigate(['/']);
   }
 
   onUserList(): void {
     this.router.navigate(['/users']);
+  }
+
+  onFavorites(): void {
+    this.router.navigate(['/favorites']);
   }
 }
