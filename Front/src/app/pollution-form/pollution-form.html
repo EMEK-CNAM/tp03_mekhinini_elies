@@ -1,5 +1,9 @@
 <div class="form-container">
     <h2>{{ isEditMode ? 'Modifier la pollution' : 'Nouvelle déclaration' }}</h2>
+
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+    <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+
     <form [formGroup]="pollutionForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
             <label for="titre">Titre *</label>

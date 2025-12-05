@@ -17,6 +17,8 @@ export class PollutionForm implements OnInit {
     pollutionForm!: FormGroup;
     isEditMode = false;
     pollutionId?: string;
+    errorMessage: string | null = null;
+    successMessage: string | null = null;
 
     constructor(
         private fb: FormBuilder,
@@ -56,19 +58,42 @@ export class PollutionForm implements OnInit {
     }
 
     onSubmit(): void {
-        if (this.pollutionForm.invalid) return;
+        if (this.pollutionForm.invalid) {
+            this.errorMessage = 'Veuillez remplir tous les champs obligatoires';
+            return;
+        }
+
+        this.errorMessage = null;
+        this.successMessage = null;
 
         const pollution: Pollution = this.pollutionForm.value;
 
+        console.log('Données du formulaire:', pollution);
+
         if (this.isEditMode && this.pollutionId) {
             this.svc.update(this.pollutionId, pollution).subscribe({
-                next: () => this.router.navigate(['/pollutions', this.pollutionId]),
-                error: (err) => console.error('Erreur mise à jour:', err)
+                next: (response) => {
+                    console.log('Mise à jour réussie:', response);
+                    this.successMessage = 'Pollution mise à jour avec succès';
+                    setTimeout(() => this.router.navigate(['/pollutions', this.pollutionId]), 1000);
+                },
+                error: (err) => {
+                    console.error('Erreur mise à jour complète:', err);
+                    this.errorMessage = 'Erreur lors de la mise à jour: ' + (err.error?.message || err.message || 'Erreur inconnue');
+                }
             });
         } else {
+            console.log('Création de pollution avec payload:', pollution);
             this.svc.create(pollution).subscribe({
-                next: () => this.router.navigate(['/pollutions']),
-                error: (err) => console.error('Erreur création:', err)
+                next: (response) => {
+                    console.log('Création réussie:', response);
+                    this.successMessage = 'Pollution créée avec succès';
+                    setTimeout(() => this.router.navigate(['/pollutions']), 1000);
+                },
+                error: (err) => {
+                    console.error('Erreur création complète:', err);
+                    this.errorMessage = 'Erreur lors de la création: ' + (err.error?.message || err.message || 'Erreur inconnue');
+                }
             });
         }
     }
